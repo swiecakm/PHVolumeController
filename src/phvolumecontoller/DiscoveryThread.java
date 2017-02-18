@@ -9,6 +9,8 @@ public class DiscoveryThread implements Runnable {
 	private DatagramSocket _socket;
 	private static String _hostName = "0.0.0.0";
 	private static int _portNumber = 8888;
+	private static String _serverWelcomMessage = "TEST_WELCOME";
+	private static String _serverResponseMessage = "TEST_RESPONSE";
 	
 	@Override
 	public void run()
@@ -26,10 +28,22 @@ public class DiscoveryThread implements Runnable {
 				byte[] buff = new byte[100];
 				DatagramPacket packet = new DatagramPacket(buff, buff.length);
 				_socket.receive(packet);
+				String recievedMessage = new String(packet.getData()).trim();
+						
 				System.out.println("Packet recieved from client " + packet.getAddress().getHostAddress());
-				System.out.println("Packet recieved data: " + new String(packet.getData()));
-			}
-			
+				System.out.println("Packet recieved data: " + recievedMessage);
+				
+				if(recievedMessage.equals(_serverWelcomMessage))
+				{
+					System.out.println("Recieved message accepted, sending response");
+					Thread.sleep(1000);
+					byte[] sendData = _serverResponseMessage.getBytes();
+					DatagramPacket responsePacket = new DatagramPacket(sendData, sendData.length, packet.getAddress(),_portNumber);
+					_socket.send(responsePacket);					
+				}
+				
+				
+			}	
 		}
 		catch(Exception e)
 		{
