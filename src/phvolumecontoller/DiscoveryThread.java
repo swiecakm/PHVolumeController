@@ -15,10 +15,9 @@ public class DiscoveryThread implements Runnable {
 	@Override
 	public void run()
 	{	
-		try
+		try(DatagramSocket socket = new DatagramSocket(_portNumber,InetAddress.getByName(_hostName));)
 		{
 			System.out.println("Starting server!!!");
-			_socket = new DatagramSocket(_portNumber,InetAddress.getByName(_hostName));
 			_socket.setBroadcast(true);
 			
 			while(true)
