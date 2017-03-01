@@ -10,7 +10,7 @@ public class PHVolumeController
 	public static void main(String[] args)
 	{
 		Audio.setMasterOutputVolume(_volValue);
-		DiscoveryThread discover = DiscoveryThread.getInstance();
-		discover.run();
+		NetServer discover = NetServer.getInstance();
+		discover.run();		
 	}
 }
