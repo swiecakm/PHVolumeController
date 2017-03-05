@@ -8,50 +8,56 @@ import java.net.InetAddress;
 public class NetServer implements Runnable
 {
 	private static String _hostName = "0.0.0.0";
-	private static String _clientServerName = null;
 	private static int _portNumber = 8888;
-	
+	private static InetAddress _acceptedClientAddress = null;
+
 	@Override
 	public void run()
 	{	
+		System.out.println("Starting server!!!");
 		try(DatagramSocket socket = new DatagramSocket(_portNumber,InetAddress.getByName(_hostName));)
 		{
-			System.out.println("Starting server!!!");
-			socket.setBroadcast(true);
-			
-			while(true)
-			{
-				System.out.println("Recieving packet!!!");
-				
-				byte[] buff = new byte[100];
-				DatagramPacket packet = new DatagramPacket(buff, buff.length);
-				socket.receive(packet);
-				String recievedMessage = new String(packet.getData()).trim();
-				String senderAddress = packet.getAddress().getHostAddress();
-						
-				System.out.println("Packet recieved from client " + senderAddress);
-				System.out.println("Packet recieved data: " + recievedMessage);
-				
-				if(recievedMessage.equals(Commands.WELCOME_MESSAGE.getCommand()))
-				{
-					acceptConnection(socket, packet);
-				}
-				else if(senderAddress.equals(_clientServerName))
-				{
-					interpretCommand(recievedMessage);
-				}
-			}	
+			startServer(socket);
 		}
-		catch(Exception e)
+		catch (Exception e)
 		{
-			System.out.println(e.toString());
+			System.out.println("Server error: " + e);
+		}
+	}
+
+	private void startServer(DatagramSocket socket)
+	{
+		while(true)
+		{
+			try
+			{
+				ClientMessage message = ClientMessage.recieve(socket);
+						
+				System.out.println("Packet recieved from client " + message.getSenderAddress());
+				System.out.println("Packet recieved data: " + message.toString());
+				
+				if(message.toString().equals(Commands.WELCOME_MESSAGE.getCommand()))
+				{
+					message.sendWelcomeResponse();
+					_acceptedClientAddress = message.getSenderAddress();
+					System.out.println("Client accepted");
+				}
+				else if(message.getSenderAddress().equals(_acceptedClientAddress))
+				{
+					interpretCommand(message.toString());
+				}
+			}
+			catch(IOException e)
+			{
+				System.out.println("IO error in server+client connection: " + e);
+			}
 		}
 	}
 
 	private void interpretCommand(String recievedMessage)
 	{
 		Commands matchedCommand = Commands.get(recievedMessage);
-		if(matchedCommand== null){return;}
+		if(matchedCommand == null){return;}
 		
 		switch (matchedCommand)
 		{
@@ -65,17 +71,6 @@ public class NetServer implements Runnable
 				break;
 		}
 	}
-
-	private void acceptConnection(DatagramSocket socket, DatagramPacket packet)
-			throws InterruptedException, IOException
-	{
-		System.out.println("Recieved message accepted, sending response");
-		Thread.sleep(1000);
-		byte[] sendData = Commands.RESPONSE_MESSAGE.getBytes();
-		DatagramPacket responsePacket = new DatagramPacket(sendData, sendData.length, packet.getAddress(),_portNumber);
-		socket.send(responsePacket);
-		_clientServerName = packet.getAddress().getHostAddress();
-	}
 	
 	public static NetServer getInstance()
 	{
@@ -86,4 +81,5 @@ public class NetServer implements Runnable
 	{
 		private static NetServer INSTANCE = new NetServer();
 	}
+	
 }
