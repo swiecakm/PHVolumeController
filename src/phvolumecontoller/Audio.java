@@ -20,7 +20,14 @@ public class Audio {
 		System.out.println(getHierarchyInfo());
 		System.out.println(getMasterOutputVolume());
 	}
-
+	public static void increaseMasterOutputVolume()
+	{
+		setMasterOutputVolume((float)Math.min(1,(getMasterOutputVolume()+0.05)));
+	}
+	public static void decreaseMasterOutputVolume()
+	{
+		setMasterOutputVolume((float)Math.max(0,(getMasterOutputVolume()-0.05)));
+	}
 	public static void setMasterOutputVolume(float value) {
 		if (value < 0 || value > 1)
 			throw new IllegalArgumentException(

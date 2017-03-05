@@ -34,9 +34,9 @@ public class NetServer implements Runnable
 				ClientMessage recievedMessage = ClientMessage.recieve(socket);			
 				displayMessageInfo(recievedMessage);
 				
-				if(recievedMessage.toString().equals(Commands.WELCOME_MESSAGE.getContent()))
+				if(recievedMessage.toString().equals(Commands.WELCOME_MESSAGE.toString()))
 				{
-					recievedMessage.sendResponse(Commands.RESPONSE_MESSAGE.getContent());
+					recievedMessage.sendResponse(Commands.RESPONSE_MESSAGE.toString());
 					_acceptedClientAddress = recievedMessage.getSenderAddress();
 					System.out.println("Client accepted");
 				}
@@ -61,18 +61,9 @@ public class NetServer implements Runnable
 	private void interpretCommand(String recievedMessage)
 	{
 		Commands matchedCommand = Commands.get(recievedMessage);
-		if(matchedCommand == null){return;}
-		
-		switch (matchedCommand)
+		if(matchedCommand != null)
 		{
-			case VOL_UP:
-				System.out.println("Zglosnij");
-				break;
-			case VOL_DOWN:
-				System.out.println("Przycisz");
-				break;
-			default:
-				break;
+			matchedCommand.execute();
 		}
 	}
 	
