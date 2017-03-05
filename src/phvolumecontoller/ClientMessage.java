@@ -23,23 +23,18 @@ public class ClientMessage
 	
 	public static ClientMessage recieve(DatagramSocket socket) throws IOException
 	{
-		ClientMessage recievedMessage = null;
-
-		socket.setBroadcast(true);
 		byte[] buff = new byte[100];
 		DatagramPacket packet = new DatagramPacket(buff, buff.length);
 		System.out.println("Recieving packet!!!");
 		socket.receive(packet);
-		recievedMessage = new ClientMessage(socket, packet);
-
-		return recievedMessage;
+		return new ClientMessage(socket, packet);
 	}
 	
-	public void sendWelcomeResponse() throws IOException
+	public void sendResponse(String message) throws IOException
 	{
-			byte[] sendData = Commands.RESPONSE_MESSAGE.getBytes();
-			DatagramPacket responsePacket = new DatagramPacket(sendData, sendData.length, _clientAddress,_socket.getLocalPort());
-			_socket.send(responsePacket);
+		byte[] sendData = message.getBytes();
+		DatagramPacket responsePacket = new DatagramPacket(sendData, sendData.length, _clientAddress,_socket.getLocalPort());
+		_socket.send(responsePacket);
 	}
 	
 	public String toString()

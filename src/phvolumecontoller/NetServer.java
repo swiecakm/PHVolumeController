@@ -1,7 +1,6 @@
 package phvolumecontoller;
 
 import java.io.IOException;
-import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 
@@ -17,6 +16,7 @@ public class NetServer implements Runnable
 		System.out.println("Starting server!!!");
 		try(DatagramSocket socket = new DatagramSocket(_portNumber,InetAddress.getByName(_hostName));)
 		{
+			socket.setBroadcast(true);
 			startServer(socket);
 		}
 		catch (Exception e)
@@ -31,27 +31,31 @@ public class NetServer implements Runnable
 		{
 			try
 			{
-				ClientMessage message = ClientMessage.recieve(socket);
-						
-				System.out.println("Packet recieved from client " + message.getSenderAddress());
-				System.out.println("Packet recieved data: " + message.toString());
+				ClientMessage recievedMessage = ClientMessage.recieve(socket);			
+				displayMessageInfo(recievedMessage);
 				
-				if(message.toString().equals(Commands.WELCOME_MESSAGE.getCommand()))
+				if(recievedMessage.toString().equals(Commands.WELCOME_MESSAGE.getContent()))
 				{
-					message.sendWelcomeResponse();
-					_acceptedClientAddress = message.getSenderAddress();
+					recievedMessage.sendResponse(Commands.RESPONSE_MESSAGE.getContent());
+					_acceptedClientAddress = recievedMessage.getSenderAddress();
 					System.out.println("Client accepted");
 				}
-				else if(message.getSenderAddress().equals(_acceptedClientAddress))
+				else if(recievedMessage.getSenderAddress().equals(_acceptedClientAddress))
 				{
-					interpretCommand(message.toString());
+					interpretCommand(recievedMessage.toString());
 				}
 			}
 			catch(IOException e)
 			{
-				System.out.println("IO error in server+client connection: " + e);
+				System.out.println("IO error in server-client connection: " + e);
 			}
 		}
+	}
+
+	private void displayMessageInfo(ClientMessage message)
+	{
+		System.out.println("Packet recieved from client " + message.getSenderAddress());
+		System.out.println("Packet recieved data: " + message.toString());
 	}
 
 	private void interpretCommand(String recievedMessage)

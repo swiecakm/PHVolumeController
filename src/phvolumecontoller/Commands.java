@@ -11,20 +11,20 @@ public enum Commands
 	WELCOME_MESSAGE("TEST_WELCOME"),
 	RESPONSE_MESSAGE("TEST_RESPONSE");
 	
-	private String _command;
+	private String _content;
 	private static final Map<String,Commands> ENUM_MAP;
 
-	Commands(String command)
+	Commands(String content)
 	{
-        _command = command;
+        _content = content;
     }
-	public String getCommand()
+	public String getContent()
 	{
-	    return _command;
+	    return _content;
 	}
 	public byte[] getBytes()
 	{
-	    return _command.getBytes();
+	    return _content.getBytes();
 	}
 	
 	static
@@ -32,7 +32,7 @@ public enum Commands
 	    Map<String,Commands> map = new ConcurrentHashMap<String,Commands>();
 	    for (Commands instance : Commands.values())
 	    {
-	      map.put(instance.getCommand(),instance);
+	      map.put(instance.getContent(),instance);
 	    }
 	    ENUM_MAP = Collections.unmodifiableMap(map);
 	}
