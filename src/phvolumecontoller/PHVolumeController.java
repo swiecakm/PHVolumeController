@@ -2,7 +2,7 @@ package phvolumecontoller;
 
 public class PHVolumeController{
     public static void main(String[] args) {
-        CommandsReceivingServer server = CommandsReceivingServer.getInstance();
+        ReceivingMessagesServer server = ReceivingMessagesServer.getInstance();
         server.setListener(new MediaCommandsInvoker());
         server.run();
     }

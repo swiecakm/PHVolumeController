@@ -25,10 +25,6 @@ public enum Commands {
         return _text;
     }
 
-    public byte[] getBytes() {
-        return _text.getBytes();
-    }
-
     //Hash map for searching for command by name
     static {
         Map<String, Commands> map = new ConcurrentHashMap<String, Commands>();

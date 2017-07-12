@@ -14,7 +14,7 @@ public class ConnectionSettings {
     }
 
     public static ConnectionSettings getInstance(){
-        return new ConnectionSettings();
+        return ConnectionSettingsHolder.INSTANCE;
     }
 
     public String getHostName() {
@@ -31,6 +31,11 @@ public class ConnectionSettings {
 
     public String getWelcomeResponse() {
         return _welcomeResponse;
+    }
+
+
+    private static class ConnectionSettingsHolder {
+        private static ConnectionSettings INSTANCE = new ConnectionSettings();
     }
 
 }
