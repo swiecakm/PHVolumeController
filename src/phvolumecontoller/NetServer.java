@@ -12,7 +12,7 @@ public class NetServer implements Runnable {
     @Override
     public void run() {
         System.out.println("Starting server!!!");
-        try (DatagramSocket socket = new DatagramSocket(_portNumber, InetAddress.getByName(_hostName));) {
+        try (DatagramSocket socket = new DatagramSocket(_portNumber, InetAddress.getByName(_hostName))) {
             socket.setBroadcast(true);
             startServer(socket);
         } catch (Exception e) {
@@ -23,15 +23,15 @@ public class NetServer implements Runnable {
     private void startServer(DatagramSocket socket) {
         while (true) {
             try {
-                ClientMessage recievedMessage = ClientMessage.recieve(socket);
-                displayMessageInfo(recievedMessage);
+                ClientMessage receivedMessage = ClientMessage.recieve(socket);
+                displayMessageInfo(receivedMessage);
 
-                if (recievedMessage.toString().equals(Commands.WELCOME_MESSAGE.toString())) {
-                    recievedMessage.sendResponse(Commands.RESPONSE_MESSAGE.toString());
-                    _acceptedClientAddress = recievedMessage.getSenderAddress();
+                if (receivedMessage.toString().equals(Commands.WELCOME_MESSAGE.toString())) {
+                    receivedMessage.sendResponse(Commands.RESPONSE_MESSAGE.toString());
+                    _acceptedClientAddress = receivedMessage.getSenderAddress();
                     System.out.println("Client accepted");
-                } else if (recievedMessage.getSenderAddress().equals(_acceptedClientAddress)) {
-                    interpretCommand(recievedMessage.toString());
+                } else if (receivedMessage.getSenderAddress().equals(_acceptedClientAddress)) {
+                    interpretCommand(receivedMessage.toString());
                 }
             } catch (IOException e) {
                 System.out.println("IO error in server-client connection: " + e);
@@ -40,12 +40,12 @@ public class NetServer implements Runnable {
     }
 
     private void displayMessageInfo(ClientMessage message) {
-        System.out.println("Packet recieved from client " + message.getSenderAddress());
-        System.out.println("Packet recieved data: " + message.toString());
+        System.out.println("Packet received from client " + message.getSenderAddress());
+        System.out.println("Packet received data: " + message.toString());
     }
 
-    private void interpretCommand(String recievedMessage) {
-        Commands matchedCommand = Commands.get(recievedMessage);
+    private void interpretCommand(String receivedMessage) {
+        Commands matchedCommand = Commands.get(receivedMessage);
         if (matchedCommand != null) {
             matchedCommand.execute();
         }
