@@ -1,0 +1,23 @@
+volume down/up
+
+    xdotool key XF86AudioLowerVolume 
+    xdotool key XF86AudioRaiseVolume
+
+mute
+
+    xdotool key XF86AudioMute
+
+play/pause
+
+     xdotool key XF86AudioPlay
+
+previous/next
+
+     xdotool key XF86AudioPrev 
+     xdotool key XF86AudioNext
+
+mute
+
+     xdotool key XF86AudioMute
+
+
