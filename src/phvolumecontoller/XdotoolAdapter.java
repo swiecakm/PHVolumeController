@@ -2,7 +2,7 @@ package phvolumecontoller;
 
 import java.io.IOException;
 
-public class KeySender {
+public class XdotoolAdapter {
     public static void sendKey(int keyCode) {
         String command = "xdotool key " + keyCode;
         Process proc;

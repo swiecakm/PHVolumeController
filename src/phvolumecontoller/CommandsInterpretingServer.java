@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 
-public class NetServer implements Runnable {
+public class CommandsInterpretingServer implements Runnable {
     private static String _hostName = "0.0.0.0";
     private static int _portNumber = 8888;
     private static InetAddress _acceptedClientAddress = null;
@@ -51,12 +51,12 @@ public class NetServer implements Runnable {
         }
     }
 
-    public static NetServer getInstance() {
+    public static CommandsInterpretingServer getInstance() {
         return NetServerHolder.INSTANCE;
     }
 
     private static class NetServerHolder {
-        private static NetServer INSTANCE = new NetServer();
+        private static CommandsInterpretingServer INSTANCE = new CommandsInterpretingServer();
     }
 
 }
