@@ -1,6 +1,5 @@
 package phvolumecontoller;
 
-public interface Command
-{
-	void execute();
+public interface Command {
+    void execute();
 }
