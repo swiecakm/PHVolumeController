@@ -6,9 +6,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public enum Commands {
     VOL_UP("UP", () -> XdotoolAdapter.sendKey(123)),
-    VOL_DOWN("DOWN", () -> XdotoolAdapter.sendKey(122)),
-    WELCOME_MESSAGE("TEST_WELCOME", () -> {}),
-    RESPONSE_MESSAGE("TEST_RESPONSE", () -> {});
+    VOL_DOWN("DOWN", () -> XdotoolAdapter.sendKey(122));
 
     private String _text;
     private Command _command;
@@ -31,6 +29,7 @@ public enum Commands {
         return _text.getBytes();
     }
 
+    //Hash map for searching for command by name
     static {
         Map<String, Commands> map = new ConcurrentHashMap<String, Commands>();
         for (Commands instance : Commands.values()) {
