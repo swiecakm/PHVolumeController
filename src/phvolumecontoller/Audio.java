@@ -1,18 +1,10 @@
 package phvolumecontoller;
 
+import javax.sound.sampled.*;
+import javax.sound.sampled.Control.Type;
+import javax.sound.sampled.Mixer.Info;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.BooleanControl;
-import javax.sound.sampled.CompoundControl;
-import javax.sound.sampled.Control;
-import javax.sound.sampled.Control.Type;
-import javax.sound.sampled.FloatControl;
-import javax.sound.sampled.Line;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.Mixer;
-import javax.sound.sampled.Mixer.Info;
 
 public class Audio {
 

@@ -1,13 +1,8 @@
 package phvolumecontoller;
 
-import java.awt.AWTException;
-import java.awt.Robot;
-import java.awt.event.KeyEvent;
 import java.util.Collections;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-
-import com.sun.javafx.robot.FXRobot;
 
 public enum Commands {
     VOL_UP("UP", () -> KeySender.sendKey(123)), //Audio.increaseMasterOutputVolume()),
