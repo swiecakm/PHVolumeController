@@ -7,21 +7,19 @@ import java.net.InetAddress;
 
 public class ClientMessage {
     private DatagramSocket _socket;
-    private DatagramPacket _packet;
-    private String _textRecieved;
+    private String _textReceived;
     private InetAddress _clientAddress;
 
     private ClientMessage(DatagramSocket socket, DatagramPacket packet) {
         _socket = socket;
-        _packet = packet;
-        _textRecieved = new String(packet.getData()).trim();
+        _textReceived = new String(packet.getData()).trim();
         _clientAddress = packet.getAddress();
     }
 
-    public static ClientMessage recieve(DatagramSocket socket) throws IOException {
+    public static ClientMessage receive(DatagramSocket socket) throws IOException {
         byte[] buff = new byte[100];
         DatagramPacket packet = new DatagramPacket(buff, buff.length);
-        System.out.println("Recieving packet!!!");
+        System.out.println("Receiving packet!!!");
         socket.receive(packet);
         return new ClientMessage(socket, packet);
     }
@@ -33,7 +31,7 @@ public class ClientMessage {
     }
 
     public String toString() {
-        return _textRecieved;
+        return _textReceived;
     }
 
     public InetAddress getSenderAddress() {

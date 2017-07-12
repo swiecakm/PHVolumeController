@@ -7,10 +7,8 @@ import java.util.concurrent.ConcurrentHashMap;
 public enum Commands {
     VOL_UP("UP", () -> XdotoolAdapter.sendKey(123)), //Audio.increaseMasterOutputVolume()),
     VOL_DOWN("DOWN", () -> XdotoolAdapter.sendKey(122)),
-    WELCOME_MESSAGE("TEST_WELCOME", () -> {
-    }),
-    RESPONSE_MESSAGE("TEST_RESPONSE", () -> {
-    });
+    WELCOME_MESSAGE("TEST_WELCOME", () -> {}),
+    RESPONSE_MESSAGE("TEST_RESPONSE", () -> {});
 
     private String _text;
     private Command _command;

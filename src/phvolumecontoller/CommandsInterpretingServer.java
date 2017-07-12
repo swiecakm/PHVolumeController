@@ -23,7 +23,7 @@ public class CommandsInterpretingServer implements Runnable {
     private void startServer(DatagramSocket socket) {
         while (true) {
             try {
-                ClientMessage receivedMessage = ClientMessage.recieve(socket);
+                ClientMessage receivedMessage = ClientMessage.receive(socket);
                 displayMessageInfo(receivedMessage);
 
                 if (receivedMessage.toString().equals(Commands.WELCOME_MESSAGE.toString())) {
@@ -34,14 +34,14 @@ public class CommandsInterpretingServer implements Runnable {
                     interpretCommand(receivedMessage.toString());
                 }
             } catch (IOException e) {
-                System.out.println("IO error in server-client connection: " + e);
+                System.out.printf("IO error in server-client connection: %s%n", e);
             }
         }
     }
 
     private void displayMessageInfo(ClientMessage message) {
-        System.out.println("Packet received from client " + message.getSenderAddress());
-        System.out.println("Packet received data: " + message.toString());
+        System.out.printf("Packet received from client %s%n", message.getSenderAddress());
+        System.out.printf("Packet received data: %s%n", message.toString());
     }
 
     private void interpretCommand(String receivedMessage) {
