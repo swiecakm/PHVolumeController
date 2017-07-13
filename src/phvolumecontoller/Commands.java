@@ -1,5 +1,7 @@
 package phvolumecontoller;
 
+import org.jetbrains.annotations.Contract;
+
 import java.util.Collections;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -21,6 +23,7 @@ public enum Commands {
         _command.execute();
     }
 
+    @Contract(pure = true)
     public String toString() {
         return _text;
     }

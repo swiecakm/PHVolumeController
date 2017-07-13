@@ -1,5 +1,7 @@
 package phvolumecontoller;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -16,6 +18,7 @@ public class RemoteMessage {
         _clientAddress = packet.getAddress();
     }
 
+    @NotNull
     public static RemoteMessage receive(DatagramSocket socket) throws IOException {
         byte[] buff = new byte[100];
         DatagramPacket packet = new DatagramPacket(buff, buff.length);

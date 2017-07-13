@@ -1,5 +1,7 @@
 package phvolumecontoller;
 
+import org.jetbrains.annotations.Contract;
+
 /**
  * Created by root on 12.07.17.
  */
@@ -13,6 +15,7 @@ public class ConnectionSettings {
     private ConnectionSettings(){
     }
 
+    @Contract(pure = true)
     public static ConnectionSettings getInstance(){
         return ConnectionSettingsHolder.INSTANCE;
     }

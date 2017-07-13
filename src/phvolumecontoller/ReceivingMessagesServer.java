@@ -1,5 +1,7 @@
 package phvolumecontoller;
 
+import org.jetbrains.annotations.Contract;
+
 import java.io.IOException;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -48,6 +50,7 @@ public class ReceivingMessagesServer implements Runnable {
         System.out.printf("Paired with remote client: %s%n", _pairedRemoteClient.getAddress());
     }
 
+    @Contract(pure = true)
     public static ReceivingMessagesServer getInstance() {
         return ReceivingMessagesServerHolder.INSTANCE;
     }
