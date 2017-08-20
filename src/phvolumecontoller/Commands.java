@@ -7,8 +7,13 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public enum Commands {
-    VOL_UP("UP", () -> XdotoolAdapter.sendKey(123)),
-    VOL_DOWN("DOWN", () -> XdotoolAdapter.sendKey(122));
+    VOL_UP("UP", () -> XdotoolAdapter.sendKey("XF86AudioRaiseVolume")),
+    VOL_DOWN("DOWN", () -> XdotoolAdapter.sendKey("XF86AudioLowerVolume")),
+    MUTE("MUTE", () -> XdotoolAdapter.sendKey("XF86AudioMute")),
+    PLAY_PAUSE("PLAY_PAUSE", () -> XdotoolAdapter.sendKey("XF86AudioPlay")),
+    STOP("STOP", () -> XdotoolAdapter.sendKey("XF86AudioStop")),
+    PREVIOUS("PREVIOUS", () -> XdotoolAdapter.sendKey("XF86AudioPrev")),
+    NEXT("NEXT", () -> XdotoolAdapter.sendKey("XF86AudioNext"));
 
     private String _text;
     private Command _command;
